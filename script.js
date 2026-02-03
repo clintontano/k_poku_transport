@@ -14,6 +14,89 @@ document.addEventListener('DOMContentLoaded', function() {
         currentYear.textContent = new Date().getFullYear();
     }
 
+    // ============================================
+    // Hero Carousel (Home page)
+    // ============================================
+    const heroSection = document.querySelector('.hero');
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    const heroPrev = document.querySelector('.hero-carousel-arrow-prev');
+    const heroNext = document.querySelector('.hero-carousel-arrow-next');
+    const heroDotsContainer = document.querySelector('.hero-carousel-dots');
+    let heroCurrentIndex = 0;
+    let heroIntervalId;
+
+    if (heroSection && heroSlides.length > 0 && heroDotsContainer) {
+        // Create dots based on slides
+        heroSlides.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.className = 'hero-carousel-dot' + (index === 0 ? ' active' : '');
+            dot.type = 'button';
+            dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+            dot.addEventListener('click', () => {
+                goToHeroSlide(index);
+                restartHeroInterval();
+            });
+            heroDotsContainer.appendChild(dot);
+        });
+
+        const heroDots = heroDotsContainer.querySelectorAll('.hero-carousel-dot');
+
+        function goToHeroSlide(index) {
+            heroSlides[heroCurrentIndex].classList.remove('active');
+            heroDots[heroCurrentIndex].classList.remove('active');
+
+            heroCurrentIndex = (index + heroSlides.length) % heroSlides.length;
+
+            heroSlides[heroCurrentIndex].classList.add('active');
+            heroDots[heroCurrentIndex].classList.add('active');
+        }
+
+        function nextHeroSlide() {
+            goToHeroSlide(heroCurrentIndex + 1);
+        }
+
+        function prevHeroSlide() {
+            goToHeroSlide(heroCurrentIndex - 1);
+        }
+
+        function startHeroInterval() {
+            heroIntervalId = setInterval(nextHeroSlide, 5000);
+        }
+
+        function restartHeroInterval() {
+            if (heroIntervalId) {
+                clearInterval(heroIntervalId);
+            }
+            startHeroInterval();
+        }
+
+        if (heroNext) {
+            heroNext.addEventListener('click', () => {
+                nextHeroSlide();
+                restartHeroInterval();
+            });
+        }
+
+        if (heroPrev) {
+            heroPrev.addEventListener('click', () => {
+                prevHeroSlide();
+                restartHeroInterval();
+            });
+        }
+
+        heroSection.addEventListener('mouseenter', () => {
+            if (heroIntervalId) {
+                clearInterval(heroIntervalId);
+            }
+        });
+
+        heroSection.addEventListener('mouseleave', () => {
+            restartHeroInterval();
+        });
+
+        startHeroInterval();
+    }
+
     // Navbar scroll effect
     let lastScroll = 0;
     window.addEventListener('scroll', function() {

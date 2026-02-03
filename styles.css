@@ -167,6 +167,13 @@ ul {
     letter-spacing: 0.1em;
 }
 
+.logo-image {
+    height: 60px;
+    width: auto;
+    display: block;
+    border-radius: 0.75rem;
+}
+
 .nav-menu {
     display: flex;
     align-items: center;
@@ -287,84 +294,70 @@ ul {
 }
 
 /* ============================================
-   Hero Section - Enhanced with Image
+   Hero Section - Split Layout (Text + Image)
    ============================================ */
 .hero {
     position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, rgba(0, 102, 204, 0.95) 0%, rgba(0, 168, 107, 0.95) 100%),
-                url('assets/1.jpeg') center/cover no-repeat;
-    color: white;
-    text-align: center;
-    padding-top: 100px;
-    overflow: hidden;
+    padding: 8.5rem 0 6.5rem;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
 }
 
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 1;
+.hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 4rem;
 }
 
 .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 900px;
-    margin: 0 auto;
-    animation: fadeInUp 1s ease-out;
+    max-width: 520px;
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: 3.25rem;
     font-weight: 800;
     margin-bottom: 1.5rem;
     line-height: 1.1;
     letter-spacing: -0.03em;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
 .hero-subtitle {
-    font-size: 1.375rem;
-    margin-bottom: 3rem;
-    opacity: 0.95;
+    font-size: 1.25rem;
+    margin-bottom: 2.5rem;
+    color: var(--text-medium);
     line-height: 1.7;
     font-weight: 400;
 }
 
 .hero-buttons {
     display: flex;
-    gap: 1.5rem;
-    justify-content: center;
+    gap: 1.25rem;
+    justify-content: flex-start;
     flex-wrap: wrap;
 }
 
-.hero-scroll-indicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    text-align: center;
-    color: white;
-    opacity: 0.9;
-    animation: bounce 2s infinite;
+.hero-image-wrapper {
+    border-radius: 2rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    background-color: var(--bg-white);
+    aspect-ratio: 1 / 1;
 }
 
-.scroll-arrow {
-    width: 24px;
-    height: 24px;
-    border-right: 3px solid white;
-    border-bottom: 3px solid white;
-    transform: rotate(45deg);
-    margin: 0.75rem auto 0;
+.hero-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.footer-logo {
+    height: 60px;
+    width: auto;
+    display: block;
+    margin-bottom: 1rem;
+    border-radius: 0.75rem;
 }
 
 /* ============================================
@@ -636,6 +629,7 @@ ul {
     border-radius: 50%;
     overflow: hidden;
     border: 3px solid var(--primary-color);
+    display: none;
 }
 
 .testimonial-avatar img {
@@ -746,7 +740,7 @@ ul {
 
 .contact-form-wrapper {
     background: white;
-    padding: 2.5rem;
+    padding: 2.5rem 2.5rem 2rem;
     border-radius: 1.25rem;
     box-shadow: var(--shadow-lg);
 }
@@ -923,6 +917,39 @@ ul {
 }
 
 /* ============================================
+   Google Form Embed
+   ============================================ */
+.google-form-embed {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    line-height: 0; /* remove extra space under iframe */
+}
+
+.google-form-embed iframe {
+    width: 100% !important;
+    max-width: 100%;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-md);
+    background-color: #fff;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .google-form-embed iframe {
+        height: 650px;
+    }
+}
+
+@media (min-width: 769px) {
+    .google-form-embed iframe {
+        height: 500px;
+    }
+}
+
+/* ============================================
    Image Gallery Styles
    ============================================ */
 .image-gallery {
@@ -985,6 +1012,11 @@ ul {
 @media (max-width: 968px) {
     .about-content {
         grid-template-columns: 1fr;
+    }
+
+    .hero-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
     }
     
     .contact-wrapper {
